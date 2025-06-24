@@ -1,0 +1,28 @@
+#logo {
+  /* position: absolute; */
+
+  /* position: absolute; */
+  left: 0%;
+  right: 50%;
+  top: 10%;
+  bottom: 90%;
+}
+#logo1 {
+  position: absolute;
+  left: 27px;
+  right: 27px;
+  top: 7px;
+}
+
+.dropdown-item {
+  background-color: white !important;
+  color: black !important;
+}
+
+.navbar-nav {
+  margin-left: 60% !important;
+}
+
+.rc-slider-handle {
+  cursor: default;
+}
