@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { setSortOrder } from "../redux/productSlice";
-
+import PriceFilterWithChart from "../components/PriceFilterWithChart";
 function ProductListing() {
   const categories = [
     { label: "All", value: "All" },
@@ -21,6 +21,9 @@ function ProductListing() {
     { label: "Jewelry", value: "jewelery" },
     { label: "Electronics", value: "electronics" },
   ];
+
+  const priceRange = useSelector((state) => state.products.filters.priceRange);
+
   const dispatch = useDispatch();
 
   const products = useSelector((state) => state.products.filteredProducts);
@@ -37,7 +40,7 @@ function ProductListing() {
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
-  const priceRange = useSelector((state) => state.products.filters.priceRange);
+
   return (
     <>
       <Header />
@@ -46,10 +49,10 @@ function ProductListing() {
           <img src={homeImg} alt="homeImg" className="img-fluid w-100" />
         </section>
 
-        <section>
+        <section className="p-4">
           <div className="row">
-            <div className="col-md-3">
-              <div className="card p-3 mb-4">
+            <div className="col-md-3 p-3">
+              <div className=" card p-3 mb-4">
                 <h5 className="mb-3">Filters</h5>
                 <label className="form-label">Category</label>
                 <select
@@ -59,32 +62,26 @@ function ProductListing() {
                     setCurrentPage(1);
                   }}
                 >
-                  {categories.map((cat) => (
-                    <option key={cat.value} value={cat.value}>
-                      {cat.label}
+                  {categories.map((categy) => (
+                    <option key={categy.value} value={categy.value}>
+                      {categy.label}
                     </option>
                   ))}
                 </select>
-                <label className="form-label">Price</label>
 
-                <Slider
-                  range
-                  min={0}
-                  max={1000}
-                  value={priceRange}
+                <PriceFilterWithChart
+                  data={products}
+                  range={priceRange}
                   onChange={(newRange) => dispatch(setPriceRange(newRange))}
+                  className="p-0"
                 />
-                <div className="d-flex justify-content-between">
-                  <span>{priceRange[0]} INR</span>
-                  <span>{priceRange[1]}INR</span>
-                </div>
 
-                <label className="form-label my-2">Rating</label>
+                <h5 className="form-label my-2 fw-normal">Rating</h5>
                 <div className="d-flex flex-wrap gap-2">
                   {[5, 4, 3, 2, 1].map((rating) => (
                     <button
                       key={rating}
-                      className="btn btn-outline-secondary d-flex align-items-center border border-solid mx-2 my-2"
+                      className="btn btn-outline-secondary d-flex align-items-center border border-solid mx-2 my-2 px-1 py-2"
                       onClick={() => {
                         dispatch(setMinRating(rating));
                         setCurrentPage(1);
